@@ -15,6 +15,18 @@ app.get('/update', (req: Request, res: Response) => {
     downloadJSONFile(URL_ALL, "test2.json").then(() => res.sendStatus(200)).catch((err) => res.send(err));
 });
 
+app.get('/all', (req: Request, res: Response) => {
+    fs.readFile('test2.json', (err, data) => {
+        try {
+            if (err) throw err;
+            else res.json(JSON.parse(data.toString()));
+        } catch (error) {
+            console.error(error);
+            res.status(500).send((error as Error).message)
+        }
+    })
+});
+
 app.listen(
     PORT, 
     () => console.log(`It's alive on http://localhost:${PORT}`)
