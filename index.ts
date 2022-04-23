@@ -34,7 +34,14 @@ app.get('/authors/orcid/:orcid', (req: Request<{orcid: string}>, res: Response) 
     url = url.replace("__ORCID__", req.params.orcid)
     
     getJSONFile(url, `${DATA_FOLDER}${req.params.orcid}.json`).then(data => res.json(data));
-})
+});
+
+app.get('/authors/name/:name', (req: Request<{name:  string}>, res: Response) => {
+    let url = URL_AUTHORNAME;
+    url = url.replace("__AUTHORNAME__", req.params.name);
+
+    getJSONFile(url, `${DATA_FOLDER}${req.params.name.replace("+", "")}.json`).then(data => res.json(data));
+});
 
 app.listen(
     PORT, 
