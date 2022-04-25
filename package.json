@@ -11,6 +11,7 @@
   "author": "Nico Kunz <nicokunznk00@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/config": "^0.0.41",
     "@types/express": "^4.17.13",
     "@types/node": "^17.0.25",
     "@types/node-fetch": "^2.6.1",
