@@ -29,29 +29,12 @@ app.get('/test', (req: Request, res: Response) => {
 });
 
 
-
 app.use('/authors', authorRouter);
 
 app.listen(
     PORT, 
     () => console.log(`It's alive on http://localhost:${PORT}`)
 );
-
-const getJSONFile = (async (url: string, path: string) => {
-    //return fs.promises.readFile(path).then(res => res.toString()).catch(err => downloadJSONFile(url, path))
-    let data;
-    
-    try {
-        data = await fs.promises.readFile(path);
-        data = JSON.parse(data.toString());
-    } catch (error) {
-        data = await downloadJSONFile(url, path);
-    }   
-
-    return data;
-
-});
-
 
 const downloadJSONFile = (async (url: string, path: string) => {
     const response = await axios.get(url);
