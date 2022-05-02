@@ -1,5 +1,5 @@
 import axios from 'axios';
-import fs from 'fs';
+import fs, { readFile } from 'fs';
 
 /**
  * Get JSON file content, if JSON file doesn't exist download it and write to disk
@@ -8,16 +8,10 @@ import fs from 'fs';
  * @returns The content of the desired JSON file as JSON
  */
 export const getJSONFile = async (url: string, path: string) => {
-    let data;
-
-    try {
-        data = await fs.promises.readFile(path);
-        data = JSON.parse(data.toString());
-    } catch (error) {
-        data = await downloadJSONFile(url, path);
-    }
-
-    return data;
+    return fs.promises.readFile(path).then(
+        (data) => JSON.parse(data.toString()),
+        () => downloadJSONFile(url, path)
+    );
 };
 
 /**
