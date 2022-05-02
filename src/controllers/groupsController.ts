@@ -7,6 +7,11 @@ const URL_ALL: string = config.get('download_urls.seemoo.url');
 export const seemoo_get = async (req: Request, res: Response) => {
     let url = URL_ALL;
 
-    getJSONFile(url, `data/seemoo.json`).then(data => res.json(data));
+    getJSONFile(url, `data/seemoo.json`)
+        .then(data => res.status(200).json(data))
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send(err);
+        });
 };
 
