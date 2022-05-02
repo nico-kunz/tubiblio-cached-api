@@ -1,5 +1,5 @@
 import axios from 'axios';
-import fs, { readFile } from 'fs';
+import fs from 'fs';
 
 /**
  * Get JSON file content, if JSON file doesn't exist download it and write to disk

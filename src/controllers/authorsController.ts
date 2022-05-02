@@ -1,4 +1,3 @@
-import axios, { AxiosError } from 'axios';
 import config from 'config';
 import { Request, Response } from 'express';
 import { getJSONFile } from '../utils/jsonHelper';
