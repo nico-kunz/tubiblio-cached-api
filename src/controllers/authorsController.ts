@@ -2,16 +2,16 @@ import config from 'config';
 import { Request, Response } from 'express';
 import { getJSONFile } from '../utils/jsonHelper';
 
-type UrlWithPlaceholder = {url: string, placeholder: string};
+type UrlWithPlaceholder = { url: string, placeholder: string };
 
-const URL_AUTHORNAME : UrlWithPlaceholder = config.get('download_urls.by_name');
-const URL_ORCID : UrlWithPlaceholder = config.get('download_urls.by_orcid.url');
+const URL_AUTHORNAME: UrlWithPlaceholder = config.get('download_urls.by_name');
+const URL_ORCID: UrlWithPlaceholder = config.get('download_urls.by_orcid.url');
 
 export const author_name_get = async (req: Request, res: Response) => {
     let url = URL_AUTHORNAME.url;
     url = url.replace(URL_AUTHORNAME.placeholder, req.params.name);
 
-    getJSONFile(url, `data/${req.params.name.replace("+", "")}.json`).then(data => res.json(data));
+    getJSONFile(url, `data/${req.params.name.replace('+', '')}.json`).then(data => res.json(data));
 };
 
 export const author_orcid_get = async (req: Request, res: Response) => {
