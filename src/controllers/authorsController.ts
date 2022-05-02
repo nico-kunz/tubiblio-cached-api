@@ -8,8 +8,10 @@ const URL_AUTHORNAME: UrlWithPlaceholder = config.get('download_urls.by_name');
 const URL_ORCID: UrlWithPlaceholder = config.get('download_urls.by_orcid.url');
 
 export const author_name_get = async (req: Request, res: Response) => {
+    // encode parameter to support queries with non-ascii characters
+    const encodedName = encodeURI(req.params.name);
     let url = URL_AUTHORNAME.url;
-    url = url.replace(URL_AUTHORNAME.placeholder, req.params.name);
+    url = url.replace(URL_AUTHORNAME.placeholder, encodedName);
 
     getJSONFile(url, `data/${req.params.name.replace('+', '')}.json`).then(data => res.json(data));
 };
