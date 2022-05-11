@@ -27,8 +27,21 @@ export const addInjection = async (injection: InjectionType) => {
     if(i != -1) 
         data[i] = injection;
     else 
-        [...data, injection]
-    
+        data = [...data, injection]
+
+    injections = data;
+    fs.promises.writeFile('injections.json', JSON.stringify(data));
+}
+
+export const removeInjection = async (eprintId: number) => {
+    let data = await getInjections();
+    const i = data.findIndex(elem => elem.eprintid === eprintId);
+
+    if(i === -1)
+        return
+    else
+        data.splice(i, 1);
+
     injections = data;
     fs.promises.writeFile('injections.json', JSON.stringify(data));
 }
