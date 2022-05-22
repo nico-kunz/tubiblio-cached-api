@@ -4,7 +4,7 @@
     "build": "npx tsc",
     "start": "node dist/index.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/src/index.js\"",
-    "test": "npx tsc && mocha --exit dist/test/"
+    "test": "npx tsc && mocha --exit --timeout 300000 dist/test/"
   },
   "version": "1.0.0",
   "main": "index.js",
