@@ -17,10 +17,9 @@ describe('Authors', function() {
     
         it('should not return empty', async function() {
             const res = await request(app).get('/authors/name/Frank+Hessel');
-            assert.notEqual(res.body.length, 0);
+            assert.equal(isNotEmpty(res.body), true);
         });
     });
-
 
     //authors/orcid/{orcid}
     describe('by ORCID', function() {
@@ -32,7 +31,7 @@ describe('Authors', function() {
     
         it('should not return empty', async function() {
             const res = await request(app).get('/authors/orcid/0000-0002-9163-5989');
-            assert.notEqual(res.body.length, 0);
+            assert.equal(isNotEmpty(res.body), true);
         });
     });
 });
@@ -43,12 +42,16 @@ describe('Groups', function() {
         it('should return 200', async function() {
             const res = await request(app).get('/groups/seemoo');
             assert.equal(res.status, 200);
-            
         });
     
         it('should not return empty', async function() {
             const res = await request(app).get('/groups/seemoo');
-            assert.notEqual(res.body.length, 0);
+            assert.equal(isNotEmpty(res.body), true);
         });
     });
 });
+
+
+function isNotEmpty(arr: any[]) : boolean {
+    return arr.some(e => e.eprintid !== undefined)
+}
