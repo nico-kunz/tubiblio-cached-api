@@ -1,5 +1,6 @@
 import config from 'config';
 import { Request, Response } from 'express';
+import { injectData } from '../utils/injections';
 import { getJSONFile } from '../utils/jsonHelper';
 
 type UrlWithPlaceholder = { url: string, placeholder: string };
@@ -14,6 +15,7 @@ export const author_name_get = async (req: Request, res: Response) => {
     url = url.replace(URL_AUTHORNAME.placeholder, encodedName);
 
     getJSONFile(url, `data/${req.params.name.replace('+', '')}.json`)
+        .then(data => injectData(data))
         .then(data => res.status(200).json(data))
         .catch((err) => {
             console.error(err);
@@ -26,6 +28,7 @@ export const author_orcid_get = async (req: Request, res: Response) => {
     url = url.replace(URL_ORCID.placeholder, req.params.orcid)
     
     getJSONFile(url, `data/${req.params.orcid}.json`)
+        .then(data => injectData(data))
         .then(data => res.status(200).json(data))
         .catch((err) => {
             console.error(err);

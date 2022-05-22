@@ -46,5 +46,17 @@ export const removeInjection = async (eprintId: number) => {
     fs.promises.writeFile('injections.json', JSON.stringify(data));
 }
 
+export const injectData = async (data: any[]) => {
+    const inj = await getInjections();
+    const injectedData = data.map(dataElem => {
+        const index = inj.findIndex(injElem => injElem.eprintid === dataElem.eprintid);
+        if(index != -1) {
+            dataElem.official_url = inj[index].official_url;
+        }
+        return dataElem;
+    });
+
+    return injectedData;
+}
 
 
