@@ -1,10 +1,11 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
 import fs from 'fs';
 import config from 'config';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from '../swagger.json';
+
 import { authorRouter } from './routes/authorsRouter';
 import { groupsRouter } from './routes/groupsRouter';
-import { addInjection, getInjections, removeInjection } from './utils/injections';
-import { getJSONFile } from './utils/jsonHelper';
 import { injectionsRouter } from './routes/injectionsRouter';
 
 const app: Express = express();
@@ -13,6 +14,7 @@ const HOST: string = config.get('server.host');
 
 app.use(express.json());
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/authors', authorRouter);
 app.use('/groups', groupsRouter);
 app.use('/injections', injectionsRouter);
@@ -24,19 +26,4 @@ app.listen(PORT, HOST, () => {
         .catch((err) => console.log(err));
 });
 
-const URL_ALL: string = config.get('download_urls.seemoo.url');
-
-app.get('/test', async (req: Request, res: Response) => {
-    const injections = await getInjections();
-    let data = await getJSONFile(URL_ALL, 'data/seemoo.json') as any[];
-    const injectedData = data.map(dataElem => {
-        const index = injections.findIndex(injElem => injElem.eprintid === dataElem.eprintid);
-        if(index != -1) {
-            dataElem.official_url = injections[index].official_url;
-        }
-        return dataElem;
-    })
-
-    res.send(injectedData);
-});
-
+export { app };
