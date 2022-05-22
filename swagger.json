@@ -94,6 +94,56 @@
                     }
                 }
             }
+        },
+        "/injections": {
+            "get": {
+                "tags": ["Injections"],
+                "summary": "Get all currently set injections",
+                "operationId": "getInjections"
+            },
+            "put": {
+                "tags": ["Injections"],
+                "summary": "Add a new injection rule",
+                "operationId": "putInjection",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "eprintid": {
+                                        "type": "number"
+                                    },
+                                    "official_url": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Injections"],
+                "summary": "Delete an injection rule",
+                "operationId": "deleteInjection",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "eprintid": {
+                                        "type": "number"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
