@@ -13,6 +13,9 @@
     "tags": [
         {
             "name": "Authors"
+        },
+        {
+            "name": "Groups"
         }
     ],
     "paths": {
@@ -50,6 +53,13 @@
                         } 
                     }
                 ]
+            }
+        },
+        "/groups/seemoo": {
+            "get": {
+                "tags": ["Groups"],
+                "description": "Get all publications of the Secure Mobile Networking group",
+                "operationId": "getGroupsSeemoo"
             }
         }
     }
