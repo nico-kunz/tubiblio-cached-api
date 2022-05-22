@@ -1,0 +1,56 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Tubiblio Cache",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/",
+            "description": "Local server"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Authors"
+        }
+    ],
+    "paths": {
+        "/authors/name/{name}": {
+            "get": {
+                "tags": ["Authors"],
+                "description": "Get Authors by name",
+                "operationId": "getAuthorsByName",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "name",
+                        "description": "Author Name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        } 
+                    }
+                ]
+            }
+        },
+        "/authors/orcid/{orcid}": {
+            "get": {
+                "tags": ["Authors"],
+                "description": "Get Authors by orcid",
+                "operationId": "getAuthorsByOrcid",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "orcid",
+                        "description": "ORCID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        } 
+                    }
+                ]
+            }
+        }
+    }
+}
