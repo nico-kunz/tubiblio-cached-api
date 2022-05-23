@@ -11,14 +11,14 @@ export const update_cache = async (req: Request, res: Response) => {
     files = files.filter(file => !file.includes('seemoo'))
     
     // remove file extensions
-    const files2 = files.map(file => file.split('.')[0]);
-    console.log(files2)
-    console.log(files)
+    files = files.map(file => file.split('.')[0]);
 
+    // Regex for recognizing ORCIDS (e.g. 0000-0000-0000-0000)
     const ORCID_REGEX = /(\d{4}-){3}\d{3}(\d|X)/;
 
+    // Separate orcids from names 
     let remaining: string[] = [];
-    const orcids = files2.filter(fileName => {
+    const orcids = files.filter(fileName => {
         if (ORCID_REGEX.test(fileName)) {
             return true;
         } else {
@@ -29,8 +29,8 @@ export const update_cache = async (req: Request, res: Response) => {
 
     seemoo_update();
 
+    // collect all promises for updating names and orcids
     const promises = [];
-
     for (const file of orcids) {
         promises.push(author_orcid_update(file).catch(err => console.error(err)));
     }
