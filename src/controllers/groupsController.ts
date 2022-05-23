@@ -1,7 +1,7 @@
 import config from 'config';
 import { Request, Response } from 'express';
 import { injectData } from '../utils/injections';
-import { getJSONFile } from '../utils/jsonHelper';
+import { downloadJSONFile, getJSONFile } from '../utils/jsonHelper';
 
 const URL_ALL: string = config.get('download_urls.seemoo.url');
 
@@ -16,4 +16,8 @@ export const seemoo_get = async (req: Request, res: Response) => {
             res.status(500).send(err);
         });
 };
+
+export const seemoo_update = async () => {
+    return downloadJSONFile(URL_ALL, `data/seemoo.json`).then(() => console.log("seemoo done"));
+}
 
