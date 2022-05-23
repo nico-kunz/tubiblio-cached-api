@@ -36,12 +36,17 @@ export const update_cache = async (req: Request, res: Response) => {
     }
 
     for (const file of remaining) {
-        promises.push(author_name_update(file));
+        promises.push(author_name_update(file).catch(err => console.error(err)));
     }
 
     Promise.all(promises).then(() => res.send('done'));
 };
 
 export const clear_cache = async (req: Request, res: Response) => {
-    res.status(501).send('Not implemented');
+    const allFiles = await fs.promises.readdir('data/');
+
+    let promises = [];
+    promises = allFiles.map(file => fs.promises.rm('data/' + file, { recursive: true }).catch(err => console.error(err)));
+
+    Promise.all(promises).then(() => res.send('done'));
 }
