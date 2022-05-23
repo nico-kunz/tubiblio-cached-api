@@ -20,4 +20,3 @@ export const seemoo_get = async (req: Request, res: Response) => {
 export const seemoo_update = async () => {
     return downloadJSONFile(URL_ALL, `data/seemoo.json`).then(() => console.log("seemoo done"));
 }
-
