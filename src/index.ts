@@ -21,9 +21,23 @@ app.use('/injections', injectionsRouter);
 
 app.listen(PORT, HOST, () => {
     console.log(`It's alive on http://${HOST}:${PORT}`);
+
+    // create data folder if it doesn't exist
     fs.promises
         .mkdir('data/', { recursive: true })
         .catch((err) => console.log(err));
+
+    // create injections.json if it doesn't exist
+    fs.promises.readFile('injections.json').then(
+        () => {},
+        () => {
+            fs.writeFile(
+                'injections.json',
+                '',
+                (err) => err && console.error(err)
+            );
+        }
+    );
 });
 
 export { app };
