@@ -14,7 +14,7 @@ export const author_name_get = async (req: Request, res: Response) => {
     let url = URL_AUTHORNAME.url;
     url = url.replace(URL_AUTHORNAME.placeholder, encodedName);
 
-    getJSONFile(url, `data/${req.params.name.replace('+', '')}.json`)
+    getJSONFile(url, `data/${req.params.name.replace('+', '_')}.json`)
         .then(data => injectData(data))
         .then(data => res.status(200).json(data))
         .catch((err) => {
