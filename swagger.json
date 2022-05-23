@@ -19,6 +19,9 @@
         },
         {
             "name": "Injections"
+        },
+        {
+            "name": "Cache"
         }
     ],
     "paths": {
@@ -143,6 +146,20 @@
                         }
                     }
                 }
+            }
+        },
+        "/cache/update": {
+            "get": {
+                "tags": ["Cache"],
+                "summary": "Update all of the currently cached data",
+                "operationId": "getCacheUpdate"
+            }
+        },
+        "/cache/clear": {
+            "get": {
+                "tags": ["Cache"],
+                "summary": "Clear all of the currently cached data",
+                "operationId": "getCacheClear"
             }
         }
     }
