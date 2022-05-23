@@ -1,7 +1,7 @@
 import config from 'config';
 import { Request, Response } from 'express';
 import { injectData } from '../utils/injections';
-import { getJSONFile } from '../utils/jsonHelper';
+import { downloadJSONFile, getJSONFile } from '../utils/jsonHelper';
 
 type UrlWithPlaceholder = { url: string, placeholder: string };
 
@@ -23,6 +23,13 @@ export const author_name_get = async (req: Request, res: Response) => {
         });
 };
 
+export const author_name_update = async (name: string) => {
+    let url = URL_AUTHORNAME.url;
+    url = url.replace(URL_AUTHORNAME.placeholder, encodeURI(name.replace('_', '+')));
+
+    return downloadJSONFile(url, `data/${name.replace('+', '_')}.json`).then(() => console.log(name + " done"));
+}
+
 export const author_orcid_get = async (req: Request, res: Response) => {
     let url = URL_ORCID.url;
     url = url.replace(URL_ORCID.placeholder, req.params.orcid)
@@ -35,3 +42,9 @@ export const author_orcid_get = async (req: Request, res: Response) => {
             res.status(500).send(err);
         });
 };
+
+export const author_orcid_update = async (orcid: string) => {
+    let url = URL_ORCID.url;
+    url = url.replace(URL_ORCID.placeholder, orcid);
+    return downloadJSONFile(url, `data/${orcid}.json`).then(() => console.log(orcid + " done"));
+}
