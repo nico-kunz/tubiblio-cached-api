@@ -53,8 +53,8 @@ describe('Groups', function() {
 });
 
 // Test the /cache endpoints
-describe('Cache', function(){
-    describe('Clear', function(){
+describe('Cache', function() {
+    describe('Clear', function() {
         it('should return 200', async function() {
             const res = await request(app).get('/cache/clear');
             assert.equal(res.status, 200);
@@ -71,7 +71,29 @@ describe('Cache', function(){
             assert.equal(files.length, 0);
         })
     });
-})
+
+    describe('Update', function() {
+        it('should return 200', async function() {
+            const res = await request(app).get('/cache/update');
+            assert.equal(res.status, 200);
+        });
+
+        it('should update files', async function() {
+            // Create files for testing
+            const filesToCheck = ['0000-0002-9163-5989', '0000-0003-1296-2920'];
+            const promises = filesToCheck.map(fileName => fs.promises.writeFile(`data/${fileName}.json`, 'test'));
+            await Promise.all(promises);
+
+            // update cache and check if files are updated
+            await request(app).get('/cache/update');
+            
+            for (const fileName of filesToCheck) {
+                const file = await fs.promises.readFile(`data/${fileName}.json`);
+                assert.notEqual(file, 'test');
+            }
+        });
+    });
+});
 
 function isNotEmpty(arr: any[]) : boolean {
     return arr.some(e => e.eprintid !== undefined)
