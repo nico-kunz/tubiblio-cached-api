@@ -27,7 +27,7 @@ export const author_name_update = async (name: string) => {
     let url = URL_AUTHORNAME.url;
     url = url.replace(URL_AUTHORNAME.placeholder, encodeURI(name.replace('_', '+')));
 
-    return downloadJSONFile(url, `data/${name.replace('+', '_')}.json`).then(() => console.log(name + " done"));
+    return downloadJSONFile(url, `data/${name.replace('+', '_')}.json`);
 }
 
 export const author_orcid_get = async (req: Request, res: Response) => {
@@ -46,5 +46,5 @@ export const author_orcid_get = async (req: Request, res: Response) => {
 export const author_orcid_update = async (orcid: string) => {
     let url = URL_ORCID.url;
     url = url.replace(URL_ORCID.placeholder, orcid);
-    return downloadJSONFile(url, `data/${orcid}.json`).then(() => console.log(orcid + " done"));
+    return downloadJSONFile(url, `data/${orcid}.json`);
 }
