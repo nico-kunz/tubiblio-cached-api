@@ -1,13 +1,25 @@
 import 'mocha';
-import { app } from '../src';
-import fs from 'fs';
 import request from 'supertest';
 import assert from 'assert';
+import fs from 'fs';
+import axios from 'axios';
+import config from 'config';
+import { app } from '../src';
+
+describe('TuBiblio', function() {
+    it('Is currently available', async function() {
+        let url: string = config.get('download_urls.by_orcid.url');
+        url = url.replace(config.get('download_urls.by_orcid.placeholder'), '0000-0002-9163-5989');
+        
+        const response = await axios.get(url);
+        assert.equal(response.status, 200);
+    });
+});
 
 
 // Test the /authors endpoint
 describe('Authors', function() {
-    
+
     //authors/name/{name}
     describe('by Name', function() {
         it('should return 200', async function() {
@@ -39,6 +51,8 @@ describe('Authors', function() {
 
 // Test the /groups endpoint
 describe('Groups', function() {
+    
+    //groups/seemoo
     describe('Seemoo', function() {
         it('should return 200', async function() {
             const res = await request(app).get('/groups/seemoo');
@@ -54,6 +68,8 @@ describe('Groups', function() {
 
 // Test the /cache endpoints
 describe('Cache', function() {
+
+    //cache/clear
     describe('Clear', function() {
         it('should return 200', async function() {
             const res = await request(app).get('/cache/clear');
@@ -72,6 +88,7 @@ describe('Cache', function() {
         })
     });
 
+    //cache/update
     describe('Update', function() {
         it('should return 200', async function() {
             const res = await request(app).get('/cache/update');
@@ -96,5 +113,5 @@ describe('Cache', function() {
 });
 
 function isNotEmpty(arr: any[]) : boolean {
-    return arr.some(e => e.eprintid !== undefined)
+    return arr.some(e => e.eprintid !== undefined);
 }
