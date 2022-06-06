@@ -35,7 +35,7 @@ app.listen(PORT, HOST, () => {
         () => {
             fs.writeFile(
                 'injections.json',
-                '',
+                '{}',
                 (err) => err && console.error(err)
             );
         }

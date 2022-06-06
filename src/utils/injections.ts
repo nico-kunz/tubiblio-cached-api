@@ -33,13 +33,19 @@ export const getInjections = async () => {
  */
 export const addInjection = async (injection: InjectionType) => {
     let data = await getInjections();
-    
-    const i = data.findIndex(elem => elem.eprintid === injection.eprintid);
-    
-    if(i != -1) 
-        data[i] = injection;
-    else 
-        data = [...data, injection];
+
+    // if data empty add injection
+    if (Object.keys(data).length === 0) {
+        data = [injection];
+    } else {
+        // if data not empty, check if injection already exists and udpate it, otherwise add it
+        const i = data.findIndex(elem => elem.eprintid === injection.eprintid);
+        
+        if(i != -1) 
+            data[i] = injection;
+        else 
+            data = [...data, injection];
+    }
 
     injections = data;
     fs.promises.writeFile('injections.json', JSON.stringify(data));
